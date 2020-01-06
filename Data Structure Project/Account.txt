@@ -1,0 +1,82 @@
+27  4  2019
+    Butter       100         1       100
+      Poli         1         1         1
+      Poli         1         1         1
+    Pencil         5         1         5
+     Juice        30         1        30
+end
+28  4  2019
+    aimaii         0         1         0
+     Juice        30         2        60
+end
+29  4  2019
+     Juice        30        12       360
+ SoftDrink        45         1        45
+    Pencil         5         2        10
+      Copy        40        12       480
+    Snacks        30         1        30
+     Juice        30         2        60
+     mango       100        15      1500
+end
+30  4  2019
+     Juice        30         2        60
+ SoftDrink        45         1        45
+    Butter       100         1       100
+    Snacks        30         1        30
+   Mangoes         1         1         1
+end
+2  5  2019
+   Mangoes         1         1         1
+ SoftDrink        45         1        45
+       Pen        10        23       230
+ SoftDrink        45        44      1980
+ SoftDrink        45        22       990
+   Biscuit        15        22       330
+       Tea        20        15       300
+ SoftDrink        45        10       450
+   Biscuit        15        12       180
+     Juice        30         2        60
+    Butter       100         1       100
+     Bread        50         1        50
+ SoftDrink        45        20       900
+     Juice        30         2        60
+     Juice        30        10       300
+    Butter       100         1       100
+ SoftDrink        45        50      2250
+   Biscuit        15       189      2835
+ SoftDrink        45         2        90
+     Juice        30         1        30
+     Juice        30        50      1500
+     Juice        30         1        30
+     Juice        30        22       660
+ SoftDrink        45      -100     -4500
+    Butter       100         1       100
+ SoftDrink        45         1        45
+       Tea        20         1        20
+    Pencil         5         1         5
+ SoftDrink        45         8       360
+     Juice        30         1        30
+ SoftDrink        45         1        45
+     Juice        30         0         0
+     Juice        30         0         0
+     Juice        30         0         0
+     Juice        30         9       270
+    Butter       100       297     29700
+     Juice        30         4       120
+     Juice        30         2        60
+    Butter       100         1       100
+ SoftDrink        45         1        45
+     Juice        30         2        60
+    Butter       100         1       100
+     Mango         1         1         1
+     Mango         1         2         2
+    Butter       100         1       100
+     Mango         1         1         1
+    Snacks        30        12       360
+     Juice        30        21       630
+     Juice        30         2        60
+ SoftDrink        45         9       405
+     Juice        30         9       270
+     Juice        30        99      2970
+   Biscuit        15       100      1500
+     Juice        30        86      2580

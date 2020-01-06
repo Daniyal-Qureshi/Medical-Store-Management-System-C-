@@ -1,0 +1,10 @@
+               1           Juice               0              30          Nestle 	
+               2       SoftDrink              70              45           Pepsi		
+               3         Biscuit             400              15              LU 
+               4            Copy             164              40      NM_Qureshi
+               5          Pencil             117               5          Dollar 
+               6             Tea             142              20           TAPAL   
+               7          Snacks             285              30      BackParlor
+               8             Pen             141              10       Signature
+               9           Bread              99              50           Swiss	
+              10          Butter             499             100        BlueBand

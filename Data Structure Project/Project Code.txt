@@ -1,0 +1,476 @@
+#include<iostream>
+#include<iomanip>
+#include<conio.h>
+#include<string>
+#include<cstring>
+#include<ctime>
+#include<fstream>
+using namespace std;
+int counter=0;
+struct Node{
+int Sr;
+string name;
+string com;
+int price;
+int day,month,year;
+int Amount;
+int qty;
+Node *next;
+
+void dateMeth(){
+time_t now = time(0);
+tm *ltm = localtime(&now);
+
+
+this->day=ltm->tm_mday;
+this->month=1 + ltm->tm_mon;
+this->year=1900 + ltm->tm_year;
+
+}
+
+
+
+
+};
+struct List{
+List(){head=NULL;}
+void main();
+void Delete();
+void Create();
+void Print(Node *head);
+void MakeSale(List obj2);
+void AddStock();
+void insert(Node *nn);
+void saleHistory();
+void  UpdateStock();
+void Amount(Node *head,Node *Acc);
+
+Node *head;
+};
+
+
+////////////////////Amount Function;
+void List::Amount(Node *head,Node *Acc){
+	system("cls");
+	cout<<endl<<endl;
+	cout<<" Customer Receipt \t\t Date:"<<Acc->day<<"-"<<Acc->month<<"-"<<Acc->year<<endl;
+	int total=0;
+	Node *current = head;
+	int Sr=1,discount=0;
+	cout<<endl<<endl;
+	cout<<"Sr#   Name     Quantity       Price        Amount     "<<endl;   
+	while(current)
+	{
+		total+= current->Amount;
+		cout<<Sr<<setw(10)<<current->name<<setw(10)<<current->qty<<setw(13)<<current->price<<setw(13)<<current->Amount<<endl;
+		current = current->next;
+		Sr++;
+	}
+
+	if(total>500&&total<2000){
+	discount=20;
+	total=total-total*20/100;
+	}
+	else if(total>=2000){
+	discount=30;
+	total=total-total*30/100;
+	}
+
+	cout<<"_________________________________________________________"<<endl<<endl;
+	cout<<endl<<endl<<"\t\Total Amount: "<<total<<endl<<endl;
+	if(discount!=0)
+		cout<<"\tDiscount :"<<discount<<endl;
+
+ Node *curr=head;
+ while(head!=NULL){
+ head=head->next;
+ delete curr;
+ curr=head;
+ }
+ char op;
+ cout<<endl<<endl<<"Enter M/m for main menu"<<endl;
+ cin>>op;
+ if(op == 'M' || op== 'm')
+	 main();
+}
+
+
+
+
+/////////////// Sale History///////////////////////////
+void List::saleHistory()
+{
+	system("cls");
+	cout<<endl<<endl;
+	cout<<"\tSale History with respect to Date "<<endl<<endl;
+	cout<<"Name"<<setw(17)<<"Price"<<setw(5)<<"Qty"<<setw(12)<<"Amount"<<endl;	
+
+	ifstream read("Account.txt");
+	string str;
+	string str1,str2,str3,str4,str5;
+	getline(read,str);
+	cout<<endl<<"Date: "<<str<<endl<<endl;
+	while(read>>str1>>str2>>str3>>str4)
+	{
+		
+		if(str1!="end")
+		cout<<str1<<setw(5);
+		else{
+		cout<<endl<<"Date:";
+		cout<<str2<<"-"<<str3<<"-"<<str4<<endl;	
+		str2="";str4="",str3="";str1="";
+		}
+		cout<<"\t"<<str2<<"\t"<<str3<<"\t"<<str4<<endl;	
+
+	}
+	read.close();
+	char ch;
+	cout<<"Press any key to go to  main menu"<<endl;
+	cin>>ch;
+	if(ch)main();
+
+}
+///////////////Insert Function/////////////////////////
+void List::insert(Node *nn)
+{
+	nn->next = head;
+	head = nn;
+	
+}
+///////////////////Add Stock Sale Function/////////////
+
+void List::AddStock(){
+	system("cls");
+	cout<<"\t\tAdd New Stock "<<endl<<endl;
+ifstream  read("Info.txt");
+int sr;
+string str;
+while(!read.eof())
+{
+read>>sr;
+getline(read,str);
+}
+
+read.close();
+sr+=1;
+int qty,price;
+string comp;
+char op;
+string name;
+
+cin.ignore();
+cout<<"Enter Name of Item"<<endl;
+getline(cin,name);
+qty:
+cout<<"Enter Quantity of Item"<<endl;
+cin>>qty;
+if(qty<=0){
+cout<<"Quantity can't be less than or zero  "<<endl;
+goto qty;
+}
+price:
+cout<<"Enter Price of each Item"<<endl;
+cin>>price;
+if(price<=0){
+cout<<"Price can't be zero"<<endl;
+goto price;
+}
+cin.ignore();
+cout<<"Enter Company of Item"<<endl;
+getline(cin,comp);
+
+cout<<"Press Y to Add into Stock and Anyother to rewrite items'info"<<endl;
+cin>>op;
+if(op=='y')
+op='Y';
+
+
+if(op!='Y')
+AddStock();
+
+else
+{	
+ofstream write("Info.txt",ios::app);
+write<<setw(16)<<sr<<setw(16)<<name<<setw(16)<<qty<<setw(16)<<price<<setw(16)<<comp<<endl;
+write.close();
+cout<<"New Stock has been Added successfully"<<endl;
+
+}
+cout<<"Press M to go to main Menu and anyOther to add more stock"<<endl;
+cin>>op;
+if(op=='M'||op=='m')
+main();
+else
+	AddStock();
+
+}
+////////////////////////////////////Update Stock/////////////////////////
+void  List::UpdateStock(){
+	system("cls");
+	cout<<setw(50)<<"Update Stock"<<endl;
+	counter=0;
+	int Sr,Qty;
+	Node *curr=head;
+	Print(head);
+	cout<<"Enter the Serial Number of the item"<<endl;
+	cin>>Sr;
+
+	while(curr->next&&Sr!=curr->Sr)
+	curr=curr->next;
+
+	if(curr->next==NULL&&Sr!=curr->Sr)
+	{
+	cout<<"Invalid Number "<<endl;
+	UpdateStock();
+	}
+	qty:
+	cout<<"Enter Quantity of "<<curr->name<<endl;
+	cin>>Qty;
+
+	if(Qty<=0){
+	cout<<"Quantity can't be less or zero"<<endl;
+	goto qty;
+	}
+
+	curr->qty+=Qty;
+
+	
+	while(curr->next)
+	curr=curr->next;
+
+	Node *c2=head;
+
+	ofstream write("Info.txt");
+	write<<curr->Sr<<setw(15)<<curr->name<<setw(25)<<curr->qty<<setw(15)<<curr->price<<setw(8)<<curr->com<<endl;
+
+	while(curr!=head){
+	while(c2->next!=curr)
+	c2=c2->next;
+
+	curr=c2;
+	write<<curr->Sr<<setw(15)<<curr->name<<setw(25)<<curr->qty<<setw(15)<<curr->price<<setw(8)<<curr->com<<endl;
+	c2=head;
+	}
+	write.close();
+
+	char op;
+	cout<<"Stock has been Updated Successfully"<<endl;
+	cout<<"Press M to go to Main Menu and anyother to update other stock"<<endl;
+	cin>>op;
+	if(op=='M'||op=='m')
+		main();
+	else
+		UpdateStock();
+}
+
+
+
+
+
+
+////////////////////////////////MakeSale Function////////////////////////
+void List::MakeSale(List obj2){
+	
+int Sr;
+Menu:
+cout<<endl<<"Enter Serial Number of Product"<<endl;
+cin>>Sr;
+
+Node *curr=head;
+Node *Acc;
+
+int qty;
+while(curr->next&&Sr!=curr->Sr)
+curr=curr->next;
+
+if(curr->next==NULL&&Sr!=curr->Sr)
+{
+cout<<"Invalid Number "<<endl;
+goto Menu;
+}
+
+else
+{
+qty:
+cout<<"Enter Quantity of "<<curr->name<<endl;
+cin>>qty;
+	if(qty<=0){
+	cout<<"Quantity can't be less or zero"<<endl;
+	goto qty;
+	}
+
+
+
+
+if(qty>curr->qty){
+cout<< "Insufficient Quantity"<<endl;
+goto qty;
+}
+curr->qty-=qty;
+Acc=curr;
+}	
+
+while(curr->next)
+curr=curr->next;
+
+Node *c2=head;
+
+ofstream write("Info.txt");
+write<<setw(16)<<curr->Sr<<setw(16)<<curr->name<<setw(16)<<curr->qty<<setw(16)<<curr->price<<setw(16)<<curr->com<<endl;
+
+
+while(curr!=head){
+while(c2->next!=curr)
+c2=c2->next;
+
+curr=c2;
+write<<setw(16)<<curr->Sr<<setw(16)<<curr->name<<setw(16)<<curr->qty<<setw(16)<<curr->price<<setw(16)<<curr->com<<endl;
+c2=head;
+}
+write.close();
+
+Acc->Amount=Acc->price*qty;
+Acc->dateMeth();
+
+ifstream read("Account.txt");
+bool check=read.is_open();
+int day=0,month=0,year=0;
+bool flag=true;
+
+
+read>>day>>month>>year;
+string str2;
+while(!read.eof()&&check==1){ 
+getline(read,str2);
+if(str2=="end"){
+read>>day>>month>>year;
+getline(read,str2);
+}
+if(Acc->day==day&&Acc->month==month&&Acc->year==year)
+flag=false;
+}
+read.close();
+
+
+write.open("Account.txt",ios::app);
+if(flag==true){
+if(check!=0)
+write<<"end"<<endl;
+write<<Acc->day<<"  "<<Acc->month<<"  "<<Acc->year<<endl;
+}
+
+write<<setw(10)<<Acc->name<<setw(10)<<Acc->price<<setw(10)<<qty<<setw(10)<<Acc->Amount<<endl;
+write.close();
+
+char op;
+cout<<"Enter Y/y to Continue and N/n to Generate Receipt "<<endl;
+cin>>op;
+write.close();
+Node *nn = new Node;
+nn->name = Acc->name;
+nn->qty = qty;
+nn->Amount = Acc->Amount;
+nn->price = Acc->price;
+nn->Sr = Acc->Sr;
+
+obj2.insert(nn);
+if(op=='Y'||op=='y'){
+
+system("cls");
+counter=0;
+Print(head);
+MakeSale(obj2);
+}
+
+else
+	Amount(obj2.head,Acc);
+
+}
+
+///////////////////////////////Main Function called by main function /////////////////////////////
+ void List::main(){
+	 system("cls");
+	cout<<"  ___________________________________________________________________"<<endl;
+	cout<<" |                           1.Purchase Products                     |"<<endl;
+	cout<<" |                           2.Add New Stock                         |"<<endl;
+	cout<<" |                           3.Sale Histroy                          |"<<endl;
+	cout<<" |                           4.Update Stock                          |"<<endl;
+	cout<<"  ___________________________________________________________________"<<endl;
+	
+	int choice=0;	
+	Delete();
+	Create();
+	counter=0;
+	cout<<endl<<endl;
+	cout<<"Enter Your Choice"<<endl;
+	cin>>choice;
+
+
+	if(choice==1){
+		system("cls");
+	cout<<endl<<"\t\t\tPurchase Products"<<endl<<endl;
+	Print(head);
+	List obj2;
+	MakeSale(obj2);
+	}
+
+	else if(choice ==2)
+		AddStock();	
+	else if(choice ==3)
+		saleHistory();
+	else if(choice==4)
+	UpdateStock();
+	
+	else {
+	cout<<"Invalid Selection"<<endl;
+	main();
+	}
+ }
+//////////////////////////Create Function/////////////////////////////
+ void List::Create(){
+
+
+	//system("cls");
+	ifstream read("Info.txt");
+	while(!read.eof()){
+	Node *newNode=new Node;
+	read>>newNode->Sr>>newNode->name>>newNode->qty>>newNode->price;
+	getline(read,newNode->com);
+	newNode->next=head;
+	head=newNode;
+	}
+	Node *curr=head;
+	head=head->next;
+	delete curr;
+	read.close();
+
+}
+
+ ////////////////////////////PrintFunction///////////////////////////////
+void List::Print(Node *curr){
+	if(counter==0){
+	++counter;
+	cout<<"Sr"<<setw(16)<<"name"<<setw(16)<<"Quantity"<<setw(16)<<"Price"<<setw(16)<<"Company"<<endl;
+	cout<<endl;
+	}
+	if(!curr)return;
+
+	Print(curr->next);
+	cout<<curr->Sr<<setw(16)<<curr->name<<setw(16)<<curr->qty<<setw(16)<<curr->price<<setw(16)<<curr->com<<endl;
+};
+//////////////////////////////////Delete Function////////////////////////
+ void List::Delete(){
+ Node *curr=head;
+ while(head!=NULL){
+ head=head->next;
+ delete curr;
+ curr=head;
+ }
+ }
+ ///////////////////////////////Main Function/////////////////////////////
+ void main(){
+	List list;
+	list.main(); 
+	getch();
+
+}
